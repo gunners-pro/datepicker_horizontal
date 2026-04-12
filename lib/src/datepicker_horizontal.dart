@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'widgets/date_item.dart';
 
 class DatePickerHorizontal extends StatefulWidget {
   final DateTime initialDate;
@@ -15,114 +16,69 @@ class DatePickerHorizontal extends StatefulWidget {
   final double itemWidth;
   final double itemHeight;
 
-  const DatePickerHorizontal(
-      {super.key,
-      required this.initialDate,
-      this.daysCount = 30,
-      this.onDateSelected,
-      this.locale,
-      this.selectedColor = Colors.blue,
-      this.textColor = Colors.black,
-      this.selectedWeekDayTextColor = Colors.white,
-      this.selectedDayTextColor = Colors.black,
-      this.itemWidth = 50,
-      this.itemHeight = 80});
+  const DatePickerHorizontal({
+    super.key,
+    required this.initialDate,
+    this.daysCount = 30,
+    this.onDateSelected,
+    this.locale,
+    this.selectedColor = Colors.blue,
+    this.textColor = Colors.black,
+    this.selectedWeekDayTextColor = Colors.white,
+    this.selectedDayTextColor = Colors.black,
+    this.itemWidth = 50,
+    this.itemHeight = 80,
+  });
 
   @override
   State<DatePickerHorizontal> createState() => _DatePickerHorizontalState();
 }
 
 class _DatePickerHorizontalState extends State<DatePickerHorizontal> {
-  late DateTime selectedDate;
-  late List<DateTime> dates;
+  DateTime? _selectedDate;
+  List<DateTime>? _dates;
 
-  bool _isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
+  DateTime get selectedDate => _selectedDate ??= widget.initialDate;
+
+  List<DateTime> get dates => _dates ??= List.generate(
+        widget.daysCount,
+        (i) => widget.initialDate.add(Duration(days: i)),
+      );
+
+  void _onTap(DateTime date) {
+    setState(() => _selectedDate = date);
+    widget.onDateSelected?.call(date);
   }
 
-  @override
-  void initState() {
-    super.initState();
+  bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
 
-    selectedDate = widget.initialDate;
-    dates = List.generate(
-      widget.daysCount,
-      (index) => widget.initialDate.add(Duration(days: index)),
-    );
-  }
+  String _formatWeekday(DateTime date) =>
+      DateFormat.E(widget.locale).format(date);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: widget.itemHeight,
       child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: dates.length,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          itemBuilder: (context, index) {
-            final date = dates[index];
-            final isSelected = _isSameDay(date, selectedDate);
-
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedDate = date;
-                });
-
-                widget.onDateSelected?.call(date);
-              },
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                curve: Curves.easeInOut,
-                width: widget.itemWidth,
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                decoration: BoxDecoration(
-                    color: isSelected ? widget.selectedColor : Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                    border:
-                        Border.all(color: widget.selectedColor, width: 1.2)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        _formatWeekday(date),
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: isSelected
-                              ? widget.selectedWeekDayTextColor
-                              : widget.textColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.white, shape: BoxShape.circle),
-                      child: Text(
-                        "${date.day}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: isSelected
-                                ? widget.selectedDayTextColor
-                                : widget.textColor),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
+        scrollDirection: Axis.horizontal,
+        itemCount: dates.length,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        itemBuilder: (context, index) {
+          final date = dates[index];
+          return DateItem(
+            date: date,
+            isSelected: _isSameDay(date, selectedDate),
+            weekdayLabel: _formatWeekday(date),
+            width: widget.itemWidth,
+            selectedColor: widget.selectedColor,
+            textColor: widget.textColor,
+            selectedWeekDayTextColor: widget.selectedWeekDayTextColor,
+            selectedDayTextColor: widget.selectedDayTextColor,
+            onTap: _onTap,
+          );
+        },
+      ),
     );
-  }
-
-  String _formatWeekday(DateTime date) {
-    return DateFormat.E(widget.locale).format(date);
   }
 }
