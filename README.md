@@ -1,39 +1,58 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# DatePicker Horizontal
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A customizable horizontal date picker widget for Flutter with support for localization and flexible styling.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+---
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## ✨ Features
 
-## Features
+- Horizontal scrollable date picker
+- Date selection with callback
+- Customizable colors and styles
+- Localization support using `intl`
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+---
 
-## Getting started
+## 📦 Installation
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add this to your `pubspec.yaml`:
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  datepicker_horizontal: ^0.1.0
 ```
 
-## Additional information
+---
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## 🚀 Usage
+
+```dart
+DatePickerHorizontal(
+  initialDate: DateTime.now(),
+  daysCount: 10,
+  locale: 'pt_BR',
+  selectedColor: Colors.blue,
+  textColor: Colors.black,
+  onDateSelected: (date) {
+    print(date);
+  },
+)
+```
+
+---
+
+## 🎨 Customization
+
+You can customize:
+
+- selectedColor
+- textColor
+- selectedWeekDayTextColor
+- selectedDayTextColor
+- itemWidth
+- itemHeight
+
+---
+
+## 📄 License
+MIT License
