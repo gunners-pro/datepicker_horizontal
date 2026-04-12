@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DatePickerHorizontal extends StatefulWidget {
   final DateTime initialDate;
   final int daysCount;
   final ValueChanged<DateTime>? onDateSelected;
+  final String? locale;
 
   final Color selectedColor;
   final Color textColor;
@@ -18,6 +20,7 @@ class DatePickerHorizontal extends StatefulWidget {
       required this.initialDate,
       this.daysCount = 30,
       this.onDateSelected,
+      this.locale,
       this.selectedColor = Colors.blue,
       this.textColor = Colors.black,
       this.selectedWeekDayTextColor = Colors.white,
@@ -84,7 +87,7 @@ class _DatePickerHorizontalState extends State<DatePickerHorizontal> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        _weekday(date.weekday),
+                        _formatWeekday(date),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -119,9 +122,7 @@ class _DatePickerHorizontalState extends State<DatePickerHorizontal> {
     );
   }
 
-  String _weekday(int weekday) {
-    const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
-
-    return days[weekday - 1];
+  String _formatWeekday(DateTime date) {
+    return DateFormat.E(widget.locale).format(date);
   }
 }
