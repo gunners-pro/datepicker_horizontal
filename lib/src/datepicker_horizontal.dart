@@ -53,6 +53,9 @@ class DatePickerHorizontal extends StatefulWidget {
   /// Height of the date picker.
   final double itemHeight;
 
+  /// Creates a [DatePickerHorizontal] widget.
+  ///
+  /// The [initialDate] must not be null.
   const DatePickerHorizontal({
     super.key,
     required this.initialDate,
