@@ -1,3 +1,9 @@
+## 0.1.1
+
+### Fixed
+- Fixed license recognition
+- Improved API documentation
+
 ## 0.1.0
 
 ### Added
@@ -7,8 +13,6 @@
 ### Changed
 - Improved UI styling of date items
 - Enhanced customization for selected day and weekday text colors
-
----
 
 ## 0.0.1
 - Initial release

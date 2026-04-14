@@ -19,7 +19,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  datepicker_horizontal: ^0.1.0
+  datepicker_horizontal: ^0.1.1
 ```
 
 ---
