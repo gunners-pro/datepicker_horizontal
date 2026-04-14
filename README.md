@@ -4,6 +4,8 @@ A customizable horizontal date picker widget for Flutter with support for locali
 
 ---
 
+![Demo](assets/demo.gif)
+
 ## ✨ Features
 
 - Horizontal scrollable date picker
