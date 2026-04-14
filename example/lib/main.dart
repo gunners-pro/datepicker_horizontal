@@ -1,3 +1,4 @@
+import 'package:example/widgets/time_selection_section.dart';
 import 'package:flutter/material.dart';
 import 'package:datepicker_horizontal/datepicker_horizontal.dart';
 import 'widgets/hero_image.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
                 const HeroImage(),
                 const SizedBox(height: 60),
                 DatePickerHorizontal(initialDate: DateTime.now()),
+                const TimeSelectionSection(),
               ],
             ),
             const DoctorInfoCard(),
